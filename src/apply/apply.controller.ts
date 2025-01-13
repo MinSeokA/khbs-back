@@ -2,7 +2,7 @@ import { Body, Controller, Get, ParseIntPipe, Post, UseGuards } from '@nestjs/co
 import { ApplyService } from './apply.service';
 import { applyDto } from './dto/create-apply.dto';
 import { GetApplyByStudentIdAndPasswordDto } from './dto/get-apply.dto';
-import { RedisService } from '../redis/redis.service';
+import { RedisService } from '../common/redis/redis.service';
 
 @Controller('apply')
 export class ApplyController {

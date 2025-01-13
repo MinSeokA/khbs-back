@@ -7,7 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Issue } from './entity/issue.entity';
 import { Repository } from 'typeorm';
-import { RedisService } from '../redis/redis.service';
+import { RedisService } from '../common/redis/redis.service';
 import { CreateIssueDto } from './dto/create-issue.dto';
 import { ResponseIssueDto } from './dto/response-issue.dto';
 

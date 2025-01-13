@@ -9,9 +9,10 @@ import { UserModule } from './user/user.module';
 import { ApplyModule } from './apply/apply.module';
 import { CacheModule } from '@nestjs/cache-manager'
 import { createKeyv } from '@keyv/redis'
-import { RedisModule } from './redis/redis.module';
+import { RedisModule } from './common/redis/redis.module';
 import { IssueModule } from './issue/issue.module';
 import { NoticeModule } from './notice/notice.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { NoticeModule } from './notice/notice.module';
     RedisModule,
     IssueModule,
     NoticeModule,
+    EventEmitterModule.forRoot(), // 이벤트 에미터 초기화
   ],
   controllers: [AppController],
   providers: [AppService],

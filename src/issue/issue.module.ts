@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { IssueController } from './issue.controller';
 import { IssueService } from './issue.service';
-import { RedisModule } from '../redis/redis.module';
+import { RedisModule } from '../common/redis/redis.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Issue } from './entity/issue.entity';
 

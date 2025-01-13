@@ -3,7 +3,7 @@ import { NoticeController } from './notice.controller';
 import { NoticeService } from './notice.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Notice } from './entity/notice.entity';
-import { RedisModule } from '../redis/redis.module';
+import { RedisModule } from '../common/redis/redis.module';
 
 @Module({
   imports: [

@@ -68,7 +68,12 @@ export class AuthService {
     }
 
     // jwt token
-    const payload = { email: user.email, sub: findUser.id };
+    const payload = { 
+      email: user.email, 
+      sub: findUser.id, 
+      // Convert the array of strings to a single string before applying the replace method
+      roles: JSON.parse(findUser.roles.join('').replace(/\\\"/g, '"'))
+    };
     return {
       message: '로그인에 성공하였습니다.',
       status: HttpStatus.OK,
@@ -99,3 +104,4 @@ export class AuthService {
     return await bcrypt.hash(password, salt);
   }
 }
+

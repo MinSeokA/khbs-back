@@ -6,7 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { Apply } from './entity/apply.entity';
-import { RedisModule } from 'src/redis/redis.module';
+import { RedisModule } from 'src/common/redis/redis.module';
 
 @Module({
   imports: [

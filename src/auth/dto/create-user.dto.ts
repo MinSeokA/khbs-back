@@ -13,4 +13,6 @@ export class CreateUserDto {
   @IsEmail({}, { message: '유효한 이메일 형식이어야 합니다.' })
   @IsNotEmpty({ message: '이메일은 필수 항목입니다.' })
   email: string;
+
+  roles: string[];
 }

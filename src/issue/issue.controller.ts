@@ -1,8 +1,9 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { IssueService } from './issue.service';
-import { RedisService } from 'src/redis/redis.service';
+import { RedisService } from 'src/common/redis/redis.service';
 import { CreateIssueDto } from './dto/create-issue.dto';
 import { ResponseIssueDto } from './dto/response-issue.dto';
+import { Roles } from '../common/decorator/roles.decorator';
 
 @Controller('issue')
 export class IssueController {
@@ -14,6 +15,7 @@ export class IssueController {
 
   // 문의 생성
   @Post()
+  @Roles('admin')
   async createIssue(
     @Body() issue: CreateIssueDto
   ): Promise<CreateIssueDto> {

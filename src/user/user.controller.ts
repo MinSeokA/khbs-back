@@ -1,14 +1,14 @@
 import { Body, Controller, Get, Patch, Req, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
-import { AuthGuard } from '../guards/jwt-auth.guard';
+import { AuthGuard } from '../common/guards/jwt-auth.guard';
 import { UpdateUserDto } from '../auth/dto/update-user.dto';
-import { RedisService } from 'src/redis/redis.service';
+import { RedisService } from '../common/redis/redis.service';
 
 @Controller('users')
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private readonly redisService: RedisService
+    private readonly redisService: RedisService,
   ) {}
 
   // 유저 정보 조회

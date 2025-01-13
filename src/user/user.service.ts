@@ -4,12 +4,15 @@ import { User } from '../auth/entity/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { UpdateUserDto } from '../auth/dto/update-user.dto';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+
+    private readonly eventEmitter: EventEmitter2,
   ) {}
 
   // 유저 정보 조회

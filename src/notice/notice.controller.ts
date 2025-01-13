@@ -9,9 +9,10 @@ import {
   Delete,
 } from '@nestjs/common';
 import { NoticeService } from './notice.service';
-import { RedisService } from 'src/redis/redis.service';
+import { RedisService } from '../common/redis/redis.service';
 import { CreateNoticeDto } from './dto/create-notice.dto';
 import { UpdateNoticeDto } from './dto/update-notice.dto';
+import { Roles } from '../common/decorator/roles.decorator';
 
 @Controller('notice')
 export class NoticeController {
@@ -22,6 +23,7 @@ export class NoticeController {
 
   // 공지사항 생성
   @Post()
+  @Roles('admin')
   async createNotice(
     @Body() notice: CreateNoticeDto,
   ): Promise<CreateNoticeDto> {
@@ -51,6 +53,7 @@ export class NoticeController {
 
   // 공지사항 조회
   @Get('view/:id')
+  @Roles('admin')
   async getNoticeById(@Param('id', ParseIntPipe) id: number): Promise<any> {
     if (!id) {
       throw new BadRequestException('ID는 비어있을 수 없습니다.');
@@ -70,6 +73,7 @@ export class NoticeController {
 
   // 공지사항 삭제
   @Delete(':id')
+  @Roles('admin')
   async deleteNotice(
     @Param() id: number
   ): Promise<any> {
@@ -85,6 +89,7 @@ export class NoticeController {
 
   // 공지사항 수정
   @Post('update')
+  @Roles('admin')
   async updateNotice(
     @Body() id: number,
     @Body() notice: UpdateNoticeDto,

@@ -5,7 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from '../auth/entity/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
-import { RedisModule } from 'src/redis/redis.module';
+import { RedisModule } from 'src/common/redis/redis.module';
 
 @Module({
   imports: [
@@ -20,7 +20,6 @@ import { RedisModule } from 'src/redis/redis.module';
       }),
       inject: [ConfigService],
     }),  
-
   ],
   providers: [UserService],
   controllers: [UserController],

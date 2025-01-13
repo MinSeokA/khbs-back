@@ -13,4 +13,8 @@ export class User {
 
   @Column({ unique: true })
   email: string;
+
+  // JSON ARRAY
+  @Column('simple-array', { default: ['user'] })
+  roles: string[];
 }

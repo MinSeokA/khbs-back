@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { AllExceptionFilter } from './filters/all-exception.filter';
-import { ResponseInterceptor } from './filters/response.interceptor';
+import { AllExceptionFilter } from './common/filters/all-exception.filter';
+import { ResponseInterceptor } from './common/filters/response.interceptor';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { NestjsRedoxModule } from 'nestjs-redox'
 

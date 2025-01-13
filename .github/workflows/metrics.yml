@@ -1,0 +1,26 @@
+name: Metrics
+on:
+  schedule:
+    - cron: '0 0 * * *' # 매일 자정 실행
+  workflow_dispatch:
+
+jobs:
+  metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: lowlighter/metrics@latest
+        with:
+          token: khbs.lunaiz.back.dev
+          base: repositories
+          plugin_activity: yes
+          plugin_followup: yes
+          plugin_languages: yes
+
+      # Discord 웹훅 전송
+      - name: Send Metrics to Discord
+        run: |
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d "{\"content\":\"GitHub Metrics 업데이트\", \"embeds\": [{\"title\": \"새로운 Metrics 데이터\", \"description\": \"Metrics 보고서가 생성되었습니다.\", \"url\": \"https://github.com/<your-username>/<your-repository>/actions\"}]}" \
+                https://discord.com/api/webhooks/1328417512739835995/l3-SZVXzS9qmo3BDS151R2cnK7nMwL0Eif8hIbY53_hOLcmzqeDs9IzD4e3_pdplUOxb

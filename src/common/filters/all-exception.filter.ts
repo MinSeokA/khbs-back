@@ -16,6 +16,7 @@ export class AllExceptionFilter implements ExceptionFilter {
   
     catch(exception: any, host: ArgumentsHost) {
         this.logger.error(exception);
+        console.log(exception)
 
         const ctx = host.switchToHttp();
         const response: FastifyReply<any> = ctx.getResponse<FastifyReply>();

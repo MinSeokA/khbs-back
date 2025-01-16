@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('notice')
-export class Notice {
+@Entity('schedules')
+export class Schedule {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -9,13 +9,19 @@ export class Notice {
   title: string;
 
   @Column()
-  content: string;
-
-  @Column()
   author: string;
 
+  @Column()
+  period: string;
+
+  @Column()
+  date: Date;
+
+  @Column({ default: 0 }) // 상태 (예: 예정됨, 완료됨 등)
+  status: number;
+
   @Column({ nullable: true })
-  image: string;
+  thumbnail: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

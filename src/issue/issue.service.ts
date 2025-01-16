@@ -75,5 +75,40 @@ export class IssueService {
     }
   }
 
+  // 답변 수정
+  async updateAnswer(id: number, answer: string): Promise<any> {
+    // 입력 값 검증
+    if (!id || typeof id !== 'number') {
+      throw new BadRequestException('올바른 숫자를 입력해주세요.');
+    }
+    if (!answer || typeof answer !== 'string') {
+      throw new BadRequestException('답변을 입력해주세요.');
+    }
+
+    const issue = await this.issueRepository.findOne({ where: { id } });
+    if (!issue) {
+      throw new BadRequestException('해당 문의를 찾을 수 없습니다.');
+    }
+
+    try {
+      await this.issueRepository.update(id, { response: answer });
+
+      return {
+        message: '답변 수정이 완료되었습니다.',
+        status: HttpStatus.OK
+      }
+    } catch (error) {
+      throw new InternalServerErrorException(
+        '데이터베이스 업데이트 중 오류가 발생했습니다.',
+      );
+    }
+  }
+
+  // 모든 답변 조회
+  async getAnsweredIssues() {
+    const issues = await this.issueRepository.find({ where: { response: '' } });
+
+    return issues;
+  }
 }
  

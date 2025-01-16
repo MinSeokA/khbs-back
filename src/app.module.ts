@@ -13,6 +13,7 @@ import { RedisModule } from './common/redis/redis.module';
 import { IssueModule } from './issue/issue.module';
 import { NoticeModule } from './notice/notice.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { ScheduleModule } from './schedule/schedule.module';
 
 @Module({
   imports: [
@@ -51,7 +52,8 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     RedisModule,
     IssueModule,
     NoticeModule,
-    EventEmitterModule.forRoot(), // 이벤트 에미터 초기화
+    EventEmitterModule.forRoot(),
+    ScheduleModule, // 이벤트 에미터 초기화
   ],
   controllers: [AppController],
   providers: [AppService],

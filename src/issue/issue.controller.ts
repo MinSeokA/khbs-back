@@ -94,4 +94,29 @@ export class IssueController {
     }
     return this.issueService.writeAnswer(data.id, data.response);
   }
+
+  // 답변 수정
+  @Post('answer/update')
+  @Roles('admin')
+  @UseGuards(AuthGuard, RolesGuard)
+  async updateAnswer(
+    @Body() data: any,
+  ): Promise<ResponseIssueDto> {
+    const cache = await this.redisService.get('issues');
+
+    if (cache) {
+      this.redisService.delete('issues');
+    }
+
+    return this.issueService.updateAnswer(data.id, data.response);
+  }
+
+  // 모든 답변 조회
+  @Get('answer/all')
+  @Roles('admin')
+  @UseGuards(AuthGuard, RolesGuard)
+  async getAllAnswer(): Promise<any> {
+    return this.issueService.getAnsweredIssues();
+  }
+  
 }

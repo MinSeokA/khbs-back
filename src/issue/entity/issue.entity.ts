@@ -17,12 +17,11 @@ export class Issue {
   @Column({ nullable: true })
   response: string;
 
-  @Column({ default: new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) })
-  createAt: string;
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: string;
 
-
-  @Column({ default: new Date() })
-  createdAt: Date;
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
+  updatedAt: string;
 
   // 상태 | 1 = 진행 중, 2 = 해결됨
   @Column({ default: 1 })

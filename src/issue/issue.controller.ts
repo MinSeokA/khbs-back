@@ -91,6 +91,7 @@ export class IssueController {
 
     if (cache) {
       this.redisService.delete('issues');
+      this.redisService.delete('issueView:' + data.id);
     }
     return this.issueService.writeAnswer(data.id, data.response);
   }
@@ -106,6 +107,7 @@ export class IssueController {
 
     if (cache) {
       this.redisService.delete('issues');
+      this.redisService.delete('issueView:' + data.id);
     }
 
     return this.issueService.updateAnswer(data.id, data.response);

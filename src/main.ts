@@ -22,7 +22,7 @@ async function bootstrap() {
   // Enable CORS
   app.enableCors({
     origin: 'http://localhost:5173',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Accept', 'Authorization'], // 추가된 Authorization 헤더
     credentials: true,
   });

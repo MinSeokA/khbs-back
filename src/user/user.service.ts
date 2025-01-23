@@ -73,7 +73,7 @@ export class UserService {
   }
 
   // 비밀번호 번경
-  async changePassword(id: number, password: string): Promise<any> {
+  async changePassword(id: number, password: string, newP: string): Promise<any> {
     // 비밀번호 확인
     const user = await this.userRepository.findOne({ where: { id } });
 
@@ -89,7 +89,7 @@ export class UserService {
     }
 
     // 비밀번호 변경
-    const newPassword = await bcrypt.hash(password, 10);
+    const newPassword = await bcrypt.hash(newP, 10);
     await this.userRepository.update(id, { password: newPassword });
 
     return { message: '비밀번호 변경이 완료되었습니다.', status: HttpStatus.OK };

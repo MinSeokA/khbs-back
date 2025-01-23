@@ -103,5 +103,13 @@ export class AuthService {
 
     return await bcrypt.hash(password, salt);
   }
+
+  // 로그아웃
+  async logout() {
+    return {
+      message: '로그아웃에 성공하였습니다.',
+      status: HttpStatus.OK,
+    };
+  }
 }
 

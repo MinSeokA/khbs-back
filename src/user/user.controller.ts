@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthGuard } from '../common/guards/jwt-auth.guard';
 import { UpdateUserDto } from '../auth/dto/update-user.dto';
@@ -46,11 +46,12 @@ export class UserController {
 
   // 비밀번호 변경
   @UseGuards(AuthGuard)
-  @Patch('me/change-password')
+  @Post('me/change-password')
   async changePassword(
     @Req() req: any,
     @Body('password') password: string,
+    @Body('newPassword') newPassword: string,
     ) {
-    return this.userService.changePassword(req.user.sub, password);
+    return this.userService.changePassword(req.user.sub, password, newPassword);
   }
 }

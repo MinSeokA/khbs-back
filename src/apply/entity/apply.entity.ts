@@ -26,4 +26,8 @@ export class Apply {
 
   @Column({ nullable: true }) // 하고 싶은 말
   comment: string;
+
+  // 생성일
+  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  createAt: Date;
 }

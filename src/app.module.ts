@@ -14,6 +14,8 @@ import { IssueModule } from './issue/issue.module';
 import { NoticeModule } from './notice/notice.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ScheduleModule } from './schedule/schedule.module';
+import { SongsModule } from './songs/songs.module';
+import { LogsModule } from './logs/logs.module';
 
 @Module({
   imports: [
@@ -53,7 +55,9 @@ import { ScheduleModule } from './schedule/schedule.module';
     IssueModule,
     NoticeModule,
     EventEmitterModule.forRoot(),
-    ScheduleModule, // 이벤트 에미터 초기화
+    ScheduleModule,
+    SongsModule,
+    LogsModule, 
   ],
   controllers: [AppController],
   providers: [AppService],

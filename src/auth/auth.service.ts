@@ -69,7 +69,8 @@ export class AuthService {
 
     // jwt token
     const payload = { 
-      email: user.email, 
+      email: findUser.email,
+      name: findUser.name,
       sub: findUser.id, 
       // Convert the array of strings to a single string before applying the replace method
       roles: JSON.parse(findUser.roles.join('').replace(/\\\"/g, '"'))

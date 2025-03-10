@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Req, UseGuards } from '@nestjs/common';
 import { IssueService } from './issue.service';
 import { RedisService } from 'src/common/redis/redis.service';
 import { CreateIssueDto } from './dto/create-issue.dto';
@@ -67,6 +67,8 @@ export class IssueController {
 
   // 문의 삭제
   @Delete('delete/:id')
+  @Roles('admin')
+  @UseGuards(AuthGuard, RolesGuard)
   async deleteIssue(
     @Param() id: number
   ): Promise<any> {
@@ -85,6 +87,7 @@ export class IssueController {
   @Roles('admin')
   @UseGuards(AuthGuard, RolesGuard)
   async writeAnswer(
+    @Req() req: Request,
     @Body() data: any,
   ): Promise<ResponseIssueDto> {
     const cache = await this.redisService.get('issues');
@@ -93,7 +96,7 @@ export class IssueController {
       this.redisService.delete('issues');
       this.redisService.delete('issueView:' + data.id);
     }
-    return this.issueService.writeAnswer(data.id, data.response);
+    return this.issueService.writeAnswer(req, data.id, data.response);
   }
 
   // 답변 수정
@@ -101,6 +104,7 @@ export class IssueController {
   @Roles('admin')
   @UseGuards(AuthGuard, RolesGuard)
   async updateAnswer(
+    @Req() req: Request,
     @Body() data: any,
   ): Promise<ResponseIssueDto> {
     const cache = await this.redisService.get('issues');
@@ -110,7 +114,7 @@ export class IssueController {
       this.redisService.delete('issueView:' + data.id);
     }
 
-    return this.issueService.updateAnswer(data.id, data.response);
+    return this.issueService.updateAnswer(req, data.id, data.response);
   }
 
   // 모든 답변 조회

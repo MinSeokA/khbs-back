@@ -7,12 +7,16 @@ import {
   Param,
   BadRequestException,
   Delete,
+  Req,
 } from '@nestjs/common';
 import { NoticeService } from './notice.service';
 import { RedisService } from '../common/redis/redis.service';
 import { CreateNoticeDto } from './dto/create-notice.dto';
 import { UpdateNoticeDto } from './dto/update-notice.dto';
 import { Roles } from '../common/decorator/roles.decorator';
+import { AuthGuard } from '../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { UseGuards } from '@nestjs/common';
 
 @Controller('notice')
 export class NoticeController {
@@ -24,7 +28,9 @@ export class NoticeController {
   // 공지사항 생성
   @Post()
   @Roles('admin')
+  @UseGuards(AuthGuard, RolesGuard)
   async createNotice(
+    @Req() req: any,
     @Body() notice: CreateNoticeDto,
   ): Promise<CreateNoticeDto> {
     const cache = await this.redisService.get('notices');
@@ -33,7 +39,7 @@ export class NoticeController {
       this.redisService.delete('notices');
     }
 
-    return this.noticeService.createNotice(notice);
+    return this.noticeService.createNotice(req, notice);
   }
 
   // 공지사항 전체 조회
@@ -53,7 +59,6 @@ export class NoticeController {
 
   // 공지사항 조회
   @Get('view/:id')
-  @Roles('admin')
   async getNoticeById(@Param('id', ParseIntPipe) id: number): Promise<any> {
     if (!id) {
       throw new BadRequestException('ID는 비어있을 수 없습니다.');
@@ -74,7 +79,9 @@ export class NoticeController {
   // 공지사항 삭제
   @Delete(':id')
   @Roles('admin')
+  @UseGuards(AuthGuard, RolesGuard)
   async deleteNotice(
+    @Req() req: any,
     @Param() id: number
   ): Promise<any> {
     const cache = await this.redisService.get('notices');
@@ -83,17 +90,19 @@ export class NoticeController {
       this.redisService.delete('notices');
     }
 
-    return this.noticeService.deleteNotice(id);
+    return this.noticeService.deleteNotice(req, id);
 
   }
 
   // 공지사항 수정
-  @Post('update')
+  @Post('update/:id')
   @Roles('admin')
+  @UseGuards(AuthGuard, RolesGuard)
   async updateNotice(
-    @Body() id: number,
+    @Req() req: any,
+    @Param() id: number,
     @Body() notice: UpdateNoticeDto,
   ): Promise<any> {
-    return this.noticeService.updateNotice(id, notice);
+    return this.noticeService.updateNotice(req, id, notice);
   }
 }

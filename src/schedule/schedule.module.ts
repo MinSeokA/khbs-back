@@ -6,11 +6,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RedisModule } from '../common/redis/redis.module';
 import { JwtModule } from '@nestjs/jwt';
 import { Schedule } from './entity/schedule.entity';
+import { LogsModule } from 'src/logs/logs.module';
 
 @Module({
   imports: [
     ConfigModule,
     RedisModule,
+    LogsModule,
     TypeOrmModule.forFeature([Schedule]),
     JwtModule.registerAsync({
       imports: [ConfigModule],

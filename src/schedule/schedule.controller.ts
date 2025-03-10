@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards, Get, Param, ParseIntPipe, BadRequestException } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Get, Param, ParseIntPipe, BadRequestException, Req } from '@nestjs/common';
 import { ScheduleService } from './schedule.service';
 import { RedisService } from '../common/redis/redis.service';
 import { Roles } from '../common/decorator/roles.decorator';
@@ -19,6 +19,7 @@ export class ScheduleController {
   @Roles('admin')
   @UseGuards(AuthGuard, RolesGuard)
   async createSchedule(
+    @Req() req: Request,
     @Body() schedule: CreateScheduleDto
   ): Promise<CreateScheduleDto> {
     const cache = await this.redisService.get('schedules');
@@ -27,7 +28,7 @@ export class ScheduleController {
       this.redisService.delete('schedules');
     }
 
-    return this.scheduleService.createSchedule(schedule);
+    return this.scheduleService.createSchedule(req, schedule);
   }
 
   // 스케줄 전체 조회
@@ -71,6 +72,7 @@ export class ScheduleController {
   @Roles('admin')
   @UseGuards(AuthGuard, RolesGuard)
   async deleteSchedule(
+    @Req() req: Request,
     @Param('id', ParseIntPipe) id: number
   ): Promise<any> {
     const cache = await this.redisService.get('schedules');
@@ -79,7 +81,7 @@ export class ScheduleController {
       this.redisService.delete('schedules');
     }
 
-    return this.scheduleService.deleteSchedule(id);
+    return this.scheduleService.deleteSchedule(req, id);
   }
   
   // 스케줄 수정
@@ -87,6 +89,7 @@ export class ScheduleController {
   @Roles('admin')
   @UseGuards(AuthGuard, RolesGuard)
   async updateSchedule(
+    @Req() req: Request,
     @Param('id', ParseIntPipe) id: number,
     @Body() schedule: CreateScheduleDto
   ): Promise<any> {
@@ -96,6 +99,6 @@ export class ScheduleController {
       this.redisService.delete('schedules');
     }
 
-    return this.scheduleService.updateSchedule(id, schedule);
+    return this.scheduleService.updateSchedule(req, id, schedule);
   }
 }

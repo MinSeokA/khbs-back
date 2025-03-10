@@ -1,20 +1,18 @@
 import { Module } from '@nestjs/common';
-import { ApplyController } from './apply.controller';
-import { ApplyService } from './apply.service';
+import { SongsService } from './songs.service';
+import { SongsController } from './songs.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Song } from './entity/song.entity';
+import { RedisModule } from '../common/redis/redis.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { PassportModule } from '@nestjs/passport';
+import { LogsModule } from '../logs/logs.module';
 import { JwtModule } from '@nestjs/jwt';
-import { Apply } from './entity/apply.entity';
-import { RedisModule } from 'src/common/redis/redis.module';
-import { LogsModule } from 'src/logs/logs.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Apply]),
-    ConfigModule,
-    PassportModule,
+    TypeOrmModule.forFeature([Song]),
     RedisModule,
+    ConfigModule,
     LogsModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -23,10 +21,10 @@ import { LogsModule } from 'src/logs/logs.module';
         signOptions: { expiresIn: configService.get<string>('JWT_EXPIRES_IN') },
       }),
       inject: [ConfigService],
-    }),  
+    }), 
   ],
-  controllers: [ApplyController],
-  providers: [ApplyService],
-  exports: [ApplyService]
+  providers: [SongsService],
+  controllers: [SongsController],
+  exports: [SongsService],
 })
-export class ApplyModule {}
+export class SongsModule {}
